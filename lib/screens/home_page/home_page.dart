@@ -1,11 +1,11 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:animated_game/screens/home_page/count_down_timer.dart';
 import 'package:animated_game/screens/home_page/current_question.dart';
 import 'package:animated_game/screens/home_page/next_question.dart';
 import 'package:animated_game/screens/home_page/operator_view.dart';
 import 'package:animated_game/utills/app_colors.dart';
 import 'package:animated_game/utills/app_text_style.dart';
 import 'package:animated_game/utills/image_path.dart';
-import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
@@ -125,47 +125,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             ///
                             FadeIn(
                               duration: const Duration(milliseconds: 1200),
-                              child: CircularCountDownTimer(
-                                duration: 30,
-                                initialDuration: 30,
-                                controller: CountDownController(),
-                                width: 20.w,
-                                height: 20.w,
-                                ringColor: Colors.grey[300]!,
-                                fillColor: Colors.transparent,
-                                backgroundColor: Colors.transparent,
-                                strokeWidth: 0.8.h,
-                                strokeCap: StrokeCap.round,
-                                textStyle: AppTextStyle.headlineLarge,
-                                textFormat: CountdownTextFormat.S,
-                                isReverse: false,
-                                isReverseAnimation: false,
-                                isTimerTextShown: true,
-                                autoStart: false,
-                                onStart: () {
-                                  debugPrint('Countdown Started');
-                                },
-                                onComplete: () {
-                                  debugPrint('Countdown Ended');
-                                },
-                                onChange: (String timeStamp) {
-                                  debugPrint('Countdown Changed $timeStamp');
-                                },
-                                timeFormatterFunction:
-                                    (defaultFormatterFunction, duration) {
-                                  if (duration.inSeconds == 0) {
-                                    return "29";
-                                  } else {
-                                    return Function.apply(
-                                        defaultFormatterFunction, [duration]);
-                                  }
-                                },
-                              ),
+                              child: const CountDownTimer(),
                             ),
 
-                            ///
-                            ///
-                            ///
                             ///
                             ///
                             ///

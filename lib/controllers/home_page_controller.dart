@@ -1,19 +1,19 @@
+import 'dart:async';
+
 import 'package:animated_game/models/questions_model.dart';
 import 'package:animated_game/screens/home_page/quiz_complete.dart';
 import 'package:animated_game/screens/splash_screen/splash_screen.dart';
 import 'package:animated_game/utills/app_colors.dart';
 import 'package:animated_game/utills/app_text_style.dart';
-import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomePageController extends GetxController {
   RxBool isLoading = false.obs;
-  // RxBool showAnimation = false.obs;
-  // RxBool isRightAnswer = false.obs;
-  final int countDownDuration = 10;
-
-  final CountDownController countDownController = CountDownController();
+  int countDownDuration = 20;
+  double percent = 1.0;
+  double totalPercent = 20;
+  // final CountDownController countDownController = CountDownController();
 
   Color buttonColor = AppColors.black.withOpacity(0.1);
   Color buttonBorderColor = AppColors.white;
@@ -65,11 +65,37 @@ class HomePageController extends GetxController {
   ];
 
   List<String> operatorList = ['+', 'x', '-', '÷'];
+  bool timerStarted = false;
+
+  ///
+  ///
+  ///
+
+  void startTimer() {
+    const oneSec = Duration(seconds: 1);
+    Timer.periodic(oneSec, (Timer timer) {
+      isLoading.value = true;
+      if (countDownDuration < 1) {
+        timer.cancel();
+        timerStarted = false;
+        Get.to(() => const QuizComplete());
+      } else {
+        countDownDuration--;
+        percent = countDownDuration / totalPercent;
+        percent = percent.clamp(0.0, 1.0);
+      }
+      isLoading.value = false;
+    });
+  }
 
   ///
   ///
   ///
   void handleButtonTap(int index) {
+    if (!timerStarted) {
+      startTimer();
+      timerStarted = true;
+    }
     selectedButtonIndex.value = index;
     buttonColor = AppColors.white;
     checkAnswer(selectedOperator: operatorList[index], buttonIndex: index);
@@ -103,6 +129,7 @@ class HomePageController extends GetxController {
     buttonBorderColor = AppColors.white;
     operatorTextStyle = AppTextStyle.headlineLarge;
     Get.offAll(() => const SplashScreen());
+    timerStarted = false;
     isLoading.value = false;
   }
 

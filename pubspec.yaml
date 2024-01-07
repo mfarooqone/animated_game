@@ -36,6 +36,7 @@ dependencies:
   animate_do: ^3.1.2
   add_to_cart_animation: ^2.0.3
   atob_animation: ^0.0.1
+  percent_indicator: ^4.2.3
 
 
   # The following adds the Cupertino Icons font to your application.
