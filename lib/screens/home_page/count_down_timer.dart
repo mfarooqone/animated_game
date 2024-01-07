@@ -19,14 +19,16 @@ class _CountDownTimerState extends State<CountDownTimer> {
       return homePageController.isLoading.value
           ? const CircularProgressIndicator()
           : CircularPercentIndicator(
-              radius: 5.0.h,
-              lineWidth: 0.5.h,
+              radius: 6.0.h,
+              lineWidth: 0.8.h,
               percent: homePageController.percent,
               center: Text(
                 "${homePageController.countDownDuration}",
                 style: AppTextStyle.headlineLarge,
               ),
-              progressColor: Colors.blue,
+              progressColor: Colors.white,
+              fillColor: Colors.transparent,
+              backgroundColor: Colors.transparent,
             );
     });
   }
