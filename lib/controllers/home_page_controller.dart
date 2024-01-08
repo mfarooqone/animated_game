@@ -13,7 +13,7 @@ class HomePageController extends GetxController {
   int countDownDuration = 20;
   double percent = 1.0;
   double totalPercent = 20;
-  // final CountDownController countDownController = CountDownController();
+  bool isVisible = true;
 
   Color buttonColor = AppColors.black.withOpacity(0.1);
   Color buttonBorderColor = AppColors.white;
@@ -36,14 +36,21 @@ class HomePageController extends GetxController {
   int totalScore = 10;
   int currentQuestionIndex = 0;
   RxInt selectedButtonIndex = RxInt(-1);
+  double leftValue = 50;
+  double topValue = MediaQuery.of(Get.context!).size.height - 150;
 
   late AnimationController nextQuestionController;
   late AnimationController currentQuestionController;
 
   ///
   ///
+
   late AnimationController rightController;
   late AnimationController wrongController;
+
+  ///
+  ///
+  ///
   late Animation<double> rightScaleAnimation;
   late Animation<double> wrongScaleAnimation;
 
@@ -92,10 +99,17 @@ class HomePageController extends GetxController {
   ///
   ///
   void handleButtonTap(int index) {
-    if (!timerStarted) {
-      startTimer();
-      timerStarted = true;
-    }
+    isVisible = !isVisible;
+    leftValue = 50;
+    topValue = MediaQuery.of(Get.context!).size.height - 150;
+
+    ///
+    ///
+    ///
+    // if (!timerStarted) {
+    //   startTimer();
+    //   timerStarted = true;
+    // }
     selectedButtonIndex.value = index;
     buttonColor = AppColors.white;
     checkAnswer(selectedOperator: operatorList[index], buttonIndex: index);
@@ -161,12 +175,6 @@ class HomePageController extends GetxController {
         buttonColor = AppColors.black.withOpacity(0.1);
         operatorTextStyle = AppTextStyle.headlineLarge;
         currentQuestionIndex++;
-
-        ///
-        ///
-        ///
-
-        print("currentQuestionIndex == $currentQuestionIndex");
         if (currentQuestionIndex >= questions.length) {
           Get.to(() => const QuizComplete());
           isLoading.value = false;
@@ -175,7 +183,9 @@ class HomePageController extends GetxController {
         ///
         ///
         ///
-
+        isVisible = false;
+        leftValue = 0;
+        topValue = 0;
         isLoading.value = true;
         isLoading.value = false;
       });
@@ -204,16 +214,13 @@ class HomePageController extends GetxController {
         buttonColor = AppColors.black.withOpacity(0.1);
         operatorTextStyle = AppTextStyle.headlineLarge;
         currentQuestionIndex++;
-
-        ///
-        ///
-        ///
-
-        print("currentQuestionIndex == $currentQuestionIndex");
         if (currentQuestionIndex >= questions.length) {
           Get.to(() => const QuizComplete());
           isLoading.value = false;
         }
+        isVisible = false;
+        leftValue = 0;
+        topValue = 0;
 
         ///
         ///
